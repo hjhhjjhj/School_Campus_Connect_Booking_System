@@ -19,21 +19,21 @@
             </div>
         </div>
         <div id="Room_main_search_box">
-            <p>
-                Search Bar: 
-                <input type="text" id="Room_search_input_buildings" placeholder="Search rooms or buildings">
-                <button id="Room_search_button_buildings">Search</button>
-            </p>
-            <p>
-                Date:
-                <input type="text" id="Room_search_input_date" placeholder="Select a date">
-                <button id="Room_search_button_date">Search</button>
-            </p>
-            <p>
-                Time:
-                <input type="text" id="Room_search_input_time" placeholder="Select a time">
-                <button id="Room_search_button_time">Search</button>
-            </p>
+            <div class="search-row">
+                <label for="Room_search_input_buildings">Room or building</label>
+                <input type="search" id="Room_search_input_buildings" placeholder="Search rooms, buildings, or capacity">
+            </div>
+            <div class="search-row">
+                <label for="Room_search_input_date">Date</label>
+                <input type="date" id="Room_search_input_date">
+            </div>
+            <div class="search-row">
+                <label for="Room_search_input_time">Time</label>
+                <input type="time" id="Room_search_input_time">
+            </div>
+            <div class="search-actions">
+                <button id="Room_search_button_filter">Filter</button>
+            </div>
         </div>
         <div id="Room_main_mid_page">
             <div id="Room_main_mid_page_title">
