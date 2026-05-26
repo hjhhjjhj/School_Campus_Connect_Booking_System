@@ -24,6 +24,9 @@ body {
 
 #top_title_left {
     flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #top_title_right {
@@ -40,4 +43,8 @@ body {
 #main_mid_page {
     flex: 1;
     padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
