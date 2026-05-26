@@ -21,6 +21,7 @@
         <div id="main_mid_page">
             <h1> Log in to our system ! </h1>
             <p> Please enter your username and password to log in. </p>
+            <div id="login_message" class="login-message"></div>
             <form id="login_form">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required><br><br>
@@ -28,6 +29,16 @@
                 <input type="password" id="password" name="password" required><br><br>
                 <button type="submit">Login</button>
             </form>
+            <div id="account_info" class="account-info">
+                <h3>Pre-set campus account (for internal use)</h3>
+                <ul>
+                    <li>Username: alice, Password: Campus123</li>
+                    <li>Username: bob, Password: Room456</li>
+                    <li>Username: cindy, Password: Book789</li>
+                </ul>
+                <p>Please use the accounts above to log in, no registration required.</p>
+            </div>
         </div>
-    </body>
+    <script src="Login.js"></script>
+</body>
 </html>
