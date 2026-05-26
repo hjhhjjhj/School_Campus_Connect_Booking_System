@@ -9,6 +9,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-self: center;
 }
 
 #top_title {
@@ -82,4 +86,22 @@ body {
     text-align: center;
     align-self: center;
     width: min(800px, 100%);
+}
+
+#Room_main_search_box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+#Room_main_search_box {
+    display: flex;
+    width: 70%;
+    height: 8vh;
+    min-height: 10px;
+    padding: 16px;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: space-between;
 }
