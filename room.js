@@ -21,17 +21,49 @@ function displayRooms(rooms) {
         return;
     }
     
-    let html = '';
+    let html = '<div class="rooms-grid">';
     rooms.forEach(room => {
         const availableSeats = room.capacity - room.bookedSeats;
         const statusText = room.available ? 'Available' : 'Unavailable';
-        const buttonText = room.available ? 'Book Now' : 'Unavailable';
-        const buttonDisabled = room.available ? '' : 'disabled';
+        const statusClass = room.available ? 'available' : 'unavailable';
+        const cardClass = room.available ? 'room-card' : 'room-card disabled';
         
-        html += `<p>${room.name} | ${statusText} | Seats: ${availableSeats}/${room.capacity} | <button ${buttonDisabled}>${buttonText}</button></p>`;
+        html += `
+        <div class="${cardClass}" data-room-id="${room.id}">
+            <div class="room-name">${room.name}</div>
+            <div class="room-status ${statusClass}">${statusText}</div>
+            <div class="room-seats">Available: ${availableSeats}/${room.capacity}</div>
+            ${room.available ? `<div class="room-action">Click to book</div>` : ''}
+        </div>
+        `;
     });
+    html += '</div>';
     
     container.innerHTML = html;
+    
+    // 为可用房间添加点击事件
+    document.querySelectorAll('.room-card:not(.disabled)').forEach(card => {
+        card.addEventListener('click', () => {
+            const roomId = card.getAttribute('data-room-id');
+            handleRoomBooking(roomId);
+        });
+    });
+}
+
+// 处理房间预订
+function handleRoomBooking(roomId) {
+    const room = allRooms.find(r => r.id === roomId);
+    if (room) {
+        // 检查用户是否已登录
+        const user = JSON.parse(sessionStorage.getItem('campusBookingUser'));
+        if (user) {
+            alert(`Booking room: ${room.name}\nCapacity: ${room.capacity}\nAvailable seats: ${room.capacity - room.bookedSeats}`);
+            // 这里可以后续实现实际的预订逻辑
+        } else {
+            alert('Please login first to book a room.');
+            window.location.href = 'Login.html';
+        }
+    }
 }
 
 // 过滤功能
