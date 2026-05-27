@@ -439,6 +439,28 @@ body {
     text-align: center;
 }
 
+.date-picker-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.date-picker-row label {
+    font-weight: 600;
+    color: #333;
+}
+
+.date-picker-row input[type="date"] {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    min-width: 180px;
+}
+
 .time-slots-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));

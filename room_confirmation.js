@@ -33,6 +33,9 @@ function loadBookingDetails() {
     
     document.getElementById('booking_details').innerHTML = detailsHTML;
     
+    // 初始化日期选择器
+    initializeDateInput();
+    
     // 生成时间卡片
     generateTimeSlots();
 }
@@ -180,12 +183,53 @@ function getSelectedTimeRange() {
     };
 }
 
+function getSelectedDate() {
+    const dateInput = document.getElementById('booking_date');
+    return dateInput ? dateInput.value : '';
+}
+
+function initializeDateInput() {
+    const dateInput = document.getElementById('booking_date');
+    if (!dateInput) return;
+
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+    if (!dateInput.value) {
+        dateInput.value = today;
+    }
+}
+
+function parseTimeToMinutes(timeString) {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return hours * 60 + minutes;
+}
+
+function timeRangesOverlap(rangeA, rangeB) {
+    return parseTimeToMinutes(rangeA.startTime) < parseTimeToMinutes(rangeB.endTime) &&
+           parseTimeToMinutes(rangeB.startTime) < parseTimeToMinutes(rangeA.endTime);
+}
+
+function isBookingConflict(candidateBooking) {
+    const storedBookings = JSON.parse(localStorage.getItem('campusBookingBookings') || '[]');
+    return storedBookings.some(booking =>
+        booking.roomId === candidateBooking.roomId &&
+        booking.date === candidateBooking.date &&
+        timeRangesOverlap(booking.timeRange, candidateBooking.timeRange)
+    );
+}
+
 // 确认预订
 document.getElementById('confirm_button').addEventListener('click', () => {
     const bookingInfo = JSON.parse(sessionStorage.getItem('pendingBooking'));
     const selectedTime = getSelectedTimeRange();
+    const selectedDate = getSelectedDate();
     const userInfo = JSON.parse(sessionStorage.getItem('campusBookingUser'));
     
+    if (!selectedDate) {
+        alert('Please select a booking date');
+        return;
+    }
+
     if (!selectedTime) {
         alert('Please select a booking time');
         return;
@@ -207,21 +251,27 @@ document.getElementById('confirm_button').addEventListener('click', () => {
             bookedBy: userInfo.name,
             bookedUsername: userInfo.username,
             userRole: userInfo.role,
+            date: selectedDate,
             timeRange: selectedTime,
             bookedAt: new Date().toISOString()
         };
+
+        if (isBookingConflict(confirmedBooking)) {
+            window.location.href = 'Room_error.html';
+            return;
+        }
         
         const storedBookings = JSON.parse(localStorage.getItem('campusBookingBookings') || '[]');
         storedBookings.push(confirmedBooking);
         localStorage.setItem('campusBookingBookings', JSON.stringify(storedBookings));
         
-        alert(`Booking confirmed for ${bookingInfo.roomName}\nTime: ${selectedTime.startTime} - ${selectedTime.endTime}`);
+        alert(`Booking confirmed for ${bookingInfo.roomName}\nDate: ${selectedDate}\nTime: ${selectedTime.startTime} - ${selectedTime.endTime}`);
         
         // 清除临时预订信息
         sessionStorage.removeItem('pendingBooking');
         
-        // 跳转回房间列表
-        window.location.href = 'Room.html';
+        // 跳转到我的预订页面，便于立即查看已确认的订单
+        window.location.href = 'My_Booking.html';
     }
 });
 

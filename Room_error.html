@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>Booking Error</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="top_title">
+            <div id="top_title_left" class="top_title_left_class">
+                <header>
+                    <h1>Campus Connect Booking System</h1>
+                </header>
+            </div>
+            <div id="top_title_right" class="top_title_right_class">
+                <nav>
+                    <a href="index.html">Home</a> <a href="Room.html">Room</a> <a href="My_Booking.html">My Booking</a> <a href="Login.html">Login</a>
+                </nav>
+            </div>
+        </div>
+        <div id="confirmation_container">
+            <div id="confirmation_content">
+                <h2>Booking Error</h2>
+                <div class="booking-details">
+                    <p>The selected date and time period have already been booked. Please choose another time or room.</p>
+                    <p>If you need to view your current reservations, please go to the "My Booking" page.</p>
+                </div>
+                <div class="confirmation-actions">
+                    <button onclick="window.location.href='Room.html'">Back to Rooms</button>
+                    <button onclick="window.location.href='My_Booking.html'">My Bookings</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
