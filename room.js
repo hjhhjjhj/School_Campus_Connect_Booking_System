@@ -35,25 +35,47 @@ function displayRooms(rooms) {
 }
 
 // 过滤功能
-document.getElementById('Room_search_button_filter').addEventListener('click', () => {
-    const searchBuilding = document.getElementById('Room_search_input_buildings').value.toLowerCase();
-    const searchCapacity = parseInt(document.getElementById('Room_search_input_time').value) || 0;
+function applyFilter() {
+    const searchBuilding = document.getElementById('Room_search_input_buildings').value.trim().toLowerCase();
+    const searchDate = document.getElementById('Room_search_input_date').value;
+    const searchTime = document.getElementById('Room_search_input_time').value;
+    const searchCapacity = parseInt(document.getElementById('Room_search_input_capacity').value) || 0;
     
     const filteredRooms = allRooms.filter(room => {
+        // 如果未填写建筑/房间，则不限制
         const matchBuilding = searchBuilding === '' || 
                               room.name.toLowerCase().includes(searchBuilding) || 
                               room.building.toLowerCase().includes(searchBuilding);
+        
+        // 如果未填写容量要求，则不限制；否则要求可用座位数大于等于输入的容量
         const matchCapacity = searchCapacity === 0 || (room.capacity - room.bookedSeats) >= searchCapacity;
         
         return matchBuilding && matchCapacity;
     });
     
     displayRooms(filteredRooms.length > 0 ? filteredRooms : allRooms);
+}
+
+// 过滤按钮点击事件
+document.getElementById('Room_search_button_filter').addEventListener('click', () => {
+    applyFilter();
 });
 
-// 重置按钮功能
+// Enter键搜索
 document.getElementById('Room_search_input_buildings').addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-        document.getElementById('Room_search_button_filter').click();
+        applyFilter();
+    }
+});
+
+// 容量输入框Enter键搜索
+document.addEventListener('DOMContentLoaded', () => {
+    const capacityInput = document.getElementById('Room_search_input_capacity');
+    if (capacityInput) {
+        capacityInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                applyFilter();
+            }
+        });
     }
 });
