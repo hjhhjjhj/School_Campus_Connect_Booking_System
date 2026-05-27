@@ -1,0 +1,84 @@
+{
+  "rooms": [
+    {
+      "id": "A101",
+      "building": "A",
+      "name": "Room A101",
+      "capacity": 50,
+      "bookedSeats": 20,
+      "available": true
+    },
+    {
+      "id": "A102",
+      "building": "A",
+      "name": "Room A102",
+      "capacity": 40,
+      "bookedSeats": 40,
+      "available": false
+    },
+    {
+      "id": "A203",
+      "building": "A",
+      "name": "Room A203",
+      "capacity": 30,
+      "bookedSeats": 8,
+      "available": true
+    },
+    {
+      "id": "B204",
+      "building": "B",
+      "name": "Room B204",
+      "capacity": 60,
+      "bookedSeats": 60,
+      "available": false
+    },
+    {
+      "id": "B301",
+      "building": "B",
+      "name": "Room B301",
+      "capacity": 45,
+      "bookedSeats": 15,
+      "available": true
+    },
+    {
+      "id": "B305",
+      "building": "B",
+      "name": "Room B305",
+      "capacity": 35,
+      "bookedSeats": 12,
+      "available": true
+    },
+    {
+      "id": "C301",
+      "building": "C",
+      "name": "Room C301",
+      "capacity": 50,
+      "bookedSeats": 25,
+      "available": true
+    },
+    {
+      "id": "C402",
+      "building": "C",
+      "name": "Room C402",
+      "capacity": 55,
+      "bookedSeats": 55,
+      "available": false
+    },
+    {
+      "id": "C405",
+      "building": "C",
+      "name": "Room C405",
+      "capacity": 40,
+      "bookedSeats": 5,
+      "available": true
+    },
+    {
+      "id": "D101",
+      "building": "D",
+      "name": "Room D101",
+      "capacity": 25,
+      "bookedSeats": 10,
+      "available": true
+    }
+  ]
+}
