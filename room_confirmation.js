@@ -32,15 +32,170 @@ function loadBookingDetails() {
     `;
     
     document.getElementById('booking_details').innerHTML = detailsHTML;
+    
+    // 生成时间卡片
+    generateTimeSlots();
+}
+
+// 生成时间卡片 (30分钟间隔，从8:00到18:00)
+function generateTimeSlots() {
+    const container = document.getElementById('time_slots_container');
+    const slots = [];
+    
+    // 从8:00到18:00，每30分钟一个时间段
+    for (let hour = 8; hour < 18; hour++) {
+        for (let minute = 0; minute < 60; minute += 30) {
+            const startHour = hour;
+            const startMinute = minute;
+            const endHour = minute === 30 ? hour + 1 : hour;
+            const endMinute = minute === 30 ? 0 : 30;
+            
+            const startTime = `${String(startHour).padStart(2, '0')}:${String(startMinute).padStart(2, '0')}`;
+            const endTime = `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}`;
+            
+            slots.push({
+                start: startTime,
+                end: endTime,
+                startMinutes: startHour * 60 + startMinute,
+                endMinutes: endHour * 60 + endMinute
+            });
+        }
+    }
+    
+    // 生成HTML
+    let html = '';
+    slots.forEach((slot, index) => {
+        html += `
+            <div class="time-slot-card" data-index="${index}" data-start="${slot.start}" data-end="${slot.end}" data-start-minutes="${slot.startMinutes}">
+                <div class="time-slot-text">${slot.start} - ${slot.end}</div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+    
+    // 为所有时间卡片添加点击事件
+    setupTimeSlotEvents();
+}
+
+// 设置时间卡片的点击事件
+function setupTimeSlotEvents() {
+    const timeSlots = document.querySelectorAll('.time-slot-card');
+    
+    timeSlots.forEach(slot => {
+        slot.addEventListener('click', () => {
+            handleTimeSlotClick(slot);
+        });
+    });
+}
+
+// 处理时间卡片点击事件
+function handleTimeSlotClick(clickedSlot) {
+    const clickedIndex = parseInt(clickedSlot.getAttribute('data-index'));
+    const currentSelected = document.querySelectorAll('.time-slot-card.selected');
+    
+    if (currentSelected.length === 0) {
+        // 如果没有选择任何卡片，则选择点击的卡片
+        clickedSlot.classList.add('selected');
+        updateSelectedTimeDisplay();
+    } else {
+        const firstSelected = Array.from(currentSelected)[0];
+        const firstIndex = parseInt(firstSelected.getAttribute('data-index'));
+        
+        // 检查是否点击已选中的卡片（取消选择）
+        if (clickedSlot.classList.contains('selected')) {
+            // 清空所有选择
+            document.querySelectorAll('.time-slot-card').forEach(s => s.classList.remove('selected'));
+            updateSelectedTimeDisplay();
+            return;
+        }
+        
+        // 计算要选择的范围
+        let startIndex, endIndex;
+        if (clickedIndex > firstIndex) {
+            startIndex = firstIndex;
+            endIndex = clickedIndex;
+        } else {
+            startIndex = clickedIndex;
+            endIndex = firstIndex;
+        }
+        
+        // 检查连续时间是否超过4小时（8个30分钟的卡片）
+        const slotCount = endIndex - startIndex + 1;
+        const durationHours = slotCount * 0.5; // 每个卡片30分钟
+        
+        if (durationHours > 4) {
+            alert('预订时间不能超过4小时！当前选择时间为 ' + durationHours.toFixed(1) + ' 小时');
+            return;
+        }
+        
+        // 清空之前的选择
+        document.querySelectorAll('.time-slot-card').forEach(s => s.classList.remove('selected'));
+        
+        // 选择范围内的所有卡片
+        const allSlots = document.querySelectorAll('.time-slot-card');
+        for (let i = startIndex; i <= endIndex; i++) {
+            allSlots[i].classList.add('selected');
+        }
+        
+        updateSelectedTimeDisplay();
+    }
+}
+
+// 更新显示的选中时间
+function updateSelectedTimeDisplay() {
+    const selectedSlots = document.querySelectorAll('.time-slot-card.selected');
+    const displayElement = document.getElementById('selected_time_display');
+    const textElement = document.getElementById('selected_time_text');
+    
+    if (selectedSlots.length === 0) {
+        displayElement.style.display = 'none';
+    } else {
+        const firstSlot = selectedSlots[0];
+        const lastSlot = selectedSlots[selectedSlots.length - 1];
+        const startTime = firstSlot.getAttribute('data-start');
+        const endTime = lastSlot.getAttribute('data-end');
+        const duration = selectedSlots.length * 0.5;
+        
+        textElement.textContent = `${startTime} - ${endTime} (${duration.toFixed(1)}小时)`;
+        displayElement.style.display = 'block';
+    }
+}
+
+// 获取选中的时间段
+function getSelectedTimeRange() {
+    const selectedSlots = document.querySelectorAll('.time-slot-card.selected');
+    
+    if (selectedSlots.length === 0) {
+        return null;
+    }
+    
+    const firstSlot = selectedSlots[0];
+    const lastSlot = selectedSlots[selectedSlots.length - 1];
+    
+    return {
+        startTime: firstSlot.getAttribute('data-start'),
+        endTime: lastSlot.getAttribute('data-end'),
+        duration: selectedSlots.length * 0.5
+    };
 }
 
 // 确认预订
 document.getElementById('confirm_button').addEventListener('click', () => {
     const bookingInfo = JSON.parse(sessionStorage.getItem('pendingBooking'));
+    const selectedTime = getSelectedTimeRange();
+    
+    if (!selectedTime) {
+        alert('Please select a booking time');
+        return;
+    }
     
     if (bookingInfo) {
+        // 将选中的时间添加到预订信息中
+        bookingInfo.timeRange = selectedTime;
+        
         // 这里可以后续实现实际的数据库保存逻辑
-        alert(`Booking confirmed for ${bookingInfo.roomName}`);
+        alert(`Booking confirmed for ${bookingInfo.roomName}\nTime: ${selectedTime.startTime} - ${selectedTime.endTime}`);
         
         // 清除临时预订信息
         sessionStorage.removeItem('pendingBooking');

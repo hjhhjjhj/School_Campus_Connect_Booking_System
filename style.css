@@ -364,3 +364,77 @@ body {
 #cancel_button:hover {
     background: #5a6268;
 }
+
+/* Time Slot Selection Styles */
+.booking-time-section {
+    text-align: left;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.booking-time-section h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.time-slot-card {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    user-select: none;
+}
+
+.time-slot-card:hover {
+    border-color: #4a90e2;
+    background: #f0f6ff;
+    box-shadow: 0 2px 6px rgba(74, 144, 226, 0.15);
+    transform: translateY(-2px);
+}
+
+.time-slot-card.selected {
+    border-color: #28a745;
+    background: #d4edda;
+    font-weight: 600;
+    color: #155724;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.25);
+}
+
+.time-slot-text {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.selected-time-display {
+    padding: 12px;
+    background: #e8f5e9;
+    border: 1px solid #4caf50;
+    border-radius: 6px;
+    text-align: center;
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.selected-time-display p {
+    margin: 0;
+}
+
+#selected_time_text {
+    color: #1b5e20;
+    font-weight: 700;
+}
