@@ -17,6 +17,18 @@
       "password": "Book789",
       "displayName": "Cindy",
       "role": "Admin"
+    },
+    {
+      "username": "K",
+      "password": "123456",
+      "displayName": "The_shy_little_K",
+      "role": "Admin"
+    },
+    {
+      "username": "P",
+      "password": "123456",
+      "displayName": "Angry_little_P",
+      "role": "Admin"
     }
   ]
 }
