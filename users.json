@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "username": "alice",
+      "password": "Campus123",
+      "displayName": "Alice",
+      "role": "Student"
+    },
+    {
+      "username": "bob",
+      "password": "Room456",
+      "displayName": "Bob",
+      "role": "Teacher"
+    },
+    {
+      "username": "cindy",
+      "password": "Book789",
+      "displayName": "Cindy",
+      "role": "Admin"
+    }
+  ]
+}

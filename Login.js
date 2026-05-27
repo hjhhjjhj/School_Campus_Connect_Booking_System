@@ -1,11 +1,19 @@
-const users = [
-    { username: 'alice', password: 'Campus123', displayName: 'Alice', role: 'Student' },
-    { username: 'bob', password: 'Room456', displayName: 'Bob', role: 'Teacher' },
-    { username: 'cindy', password: 'Book789', displayName: 'Cindy', role: 'Admin' }
-];
-
 const loginForm = document.getElementById('login_form');
 const loginMessage = document.getElementById('login_message');
+
+// 从users.json加载用户数据
+let users = [];
+
+fetch('users.json')
+    .then(response => response.json())
+    .then(data => {
+        users = data.users;
+    })
+    .catch(error => {
+        console.error('Error loading users data:', error);
+        loginMessage.textContent = 'Failed to load user data. Please try again later.';
+        loginMessage.className = 'login-message error';
+    });
 
 loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
