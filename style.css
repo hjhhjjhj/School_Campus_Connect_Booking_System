@@ -365,6 +365,63 @@ body {
     background: #5a6268;
 }
 
+/* My Booking Page Styles */
+.my-bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.booking-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #d7dfe8;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+    text-align: left;
+}
+
+.booking-card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #1f2937;
+}
+
+.booking-card p {
+    margin: 8px 0;
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.booking-card .booking-time {
+    margin-top: 12px;
+    font-weight: 700;
+    color: #0f4a88;
+}
+
+.no-bookings {
+    margin-top: 40px;
+    padding: 24px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-bookings a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.no-bookings a:hover {
+    text-decoration: underline;
+}
+
 /* Time Slot Selection Styles */
 .booking-time-section {
     text-align: left;

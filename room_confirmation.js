@@ -184,17 +184,37 @@ function getSelectedTimeRange() {
 document.getElementById('confirm_button').addEventListener('click', () => {
     const bookingInfo = JSON.parse(sessionStorage.getItem('pendingBooking'));
     const selectedTime = getSelectedTimeRange();
+    const userInfo = JSON.parse(sessionStorage.getItem('campusBookingUser'));
     
     if (!selectedTime) {
         alert('Please select a booking time');
         return;
     }
     
+    if (!userInfo) {
+        alert('Please login before confirming a booking.');
+        window.location.href = 'Login.html';
+        return;
+    }
+    
     if (bookingInfo) {
         // 将选中的时间添加到预订信息中
-        bookingInfo.timeRange = selectedTime;
+        const confirmedBooking = {
+            roomId: bookingInfo.roomId,
+            roomName: bookingInfo.roomName,
+            capacity: bookingInfo.capacity,
+            availableSeats: bookingInfo.availableSeats,
+            bookedBy: userInfo.name,
+            bookedUsername: userInfo.username,
+            userRole: userInfo.role,
+            timeRange: selectedTime,
+            bookedAt: new Date().toISOString()
+        };
         
-        // 这里可以后续实现实际的数据库保存逻辑
+        const storedBookings = JSON.parse(localStorage.getItem('campusBookingBookings') || '[]');
+        storedBookings.push(confirmedBooking);
+        localStorage.setItem('campusBookingBookings', JSON.stringify(storedBookings));
+        
         alert(`Booking confirmed for ${bookingInfo.roomName}\nTime: ${selectedTime.startTime} - ${selectedTime.endTime}`);
         
         // 清除临时预订信息
