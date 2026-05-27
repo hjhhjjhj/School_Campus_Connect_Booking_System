@@ -272,3 +272,95 @@ body {
     color: #999;
     width: 100%;
 }
+
+/* Booking Confirmation Page Styles */
+#confirmation_container {
+    flex: 1;
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-self: center;
+    width: 100%;
+}
+
+#confirmation_content {
+    padding: 32px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#confirmation_content h2 {
+    color: #333;
+    margin-bottom: 24px;
+    font-size: 24px;
+}
+
+.booking-details {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row label {
+    font-weight: 600;
+    color: #555;
+    min-width: 150px;
+}
+
+.detail-row span {
+    color: #333;
+    text-align: right;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.confirmation-actions button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+#confirm_button {
+    background: #28a745;
+    color: #fff;
+}
+
+#confirm_button:hover {
+    background: #218838;
+}
+
+#cancel_button {
+    background: #6c757d;
+    color: #fff;
+}
+
+#cancel_button:hover {
+    background: #5a6268;
+}

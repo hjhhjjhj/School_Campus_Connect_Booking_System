@@ -57,8 +57,17 @@ function handleRoomBooking(roomId) {
         // 检查用户是否已登录
         const user = JSON.parse(sessionStorage.getItem('campusBookingUser'));
         if (user) {
-            alert(`Booking room: ${room.name}\nCapacity: ${room.capacity}\nAvailable seats: ${room.capacity - room.bookedSeats}`);
-            // 这里可以后续实现实际的预订逻辑
+            // 存储预订信息到sessionStorage
+            sessionStorage.setItem('pendingBooking', JSON.stringify({
+                roomId: room.id,
+                roomName: room.name,
+                capacity: room.capacity,
+                availableSeats: room.capacity - room.bookedSeats,
+                bookingTime: new Date().toLocaleString()
+            }));
+            
+            // 跳转到确认页面
+            window.location.href = 'Room_Confirmation.html';
         } else {
             alert('Please login first to book a room.');
             window.location.href = 'Login.html';
