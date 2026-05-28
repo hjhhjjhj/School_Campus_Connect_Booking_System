@@ -20,7 +20,7 @@ function formatBookingTime(booking) {
     return `Booked at: ${bookedAt}`;
 }
 
-function renderBookingCard(booking) {
+function renderBookingCard(booking, index) {
     const durationText = booking.timeRange && booking.timeRange.duration
         ? `${booking.timeRange.startTime} - ${booking.timeRange.endTime} (${booking.timeRange.duration.toFixed(1)}hours)`
         : 'Time not selected';
@@ -33,6 +33,7 @@ function renderBookingCard(booking) {
             <p><strong>User Role:</strong> ${booking.userRole}</p>
             <p class="booking-time">${durationText}</p>
             <p>${formatBookingTime(booking)}</p>
+            <button class="cancel-btn" data-index="${index}">Cancel</button>
         </div>
     `;
 }
@@ -61,9 +62,40 @@ function renderMyBookings() {
         return;
     }
 
-    container.innerHTML = bookings.map(renderBookingCard).join('');
+    container.innerHTML = bookings.map((booking, index) => renderBookingCard(booking, index)).join('');
+}
+
+function handleCancelClick(e) {
+    const btn = e.target.closest('.cancel-btn');
+    if (!btn) return;
+
+    const user = getCurrentUser();
+    if (!user) return;
+
+    const userBookings = getUserBookings(user.username);
+    const index = parseInt(btn.getAttribute('data-index'), 10);
+    const targetBooking = userBookings[index];
+    if (!targetBooking) return;
+
+    if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+    const storedBookings = JSON.parse(localStorage.getItem('campusBookingBookings') || '[]');
+    const updatedBookings = storedBookings.filter(b =>
+        !(b.bookedAt === targetBooking.bookedAt &&
+          b.roomId === targetBooking.roomId &&
+          b.date === targetBooking.date)
+    );
+
+    if (updatedBookings.length === storedBookings.length) {
+        alert('Booking not found. It may have already been cancelled.');
+        return;
+    }
+
+    localStorage.setItem('campusBookingBookings', JSON.stringify(updatedBookings));
+    renderMyBookings();
 }
 
 window.addEventListener('load', () => {
     renderMyBookings();
+    document.getElementById('my_booking_list').addEventListener('click', handleCancelClick);
 });
