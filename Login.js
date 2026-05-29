@@ -19,7 +19,8 @@ loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
-    const user = users.find((item) => item.username === username && item.password === password);
+    const selectedRole = document.getElementById('role-select').value;
+    const user = users.find((item) => item.username === username && item.password === password && item.role === selectedRole);
 
     if (user) {
         sessionStorage.setItem('campusBookingUser', JSON.stringify({
@@ -33,7 +34,7 @@ loginForm.addEventListener('submit', (event) => {
             window.location.href = 'index.html';
         }, 1200);
     } else {
-        loginMessage.textContent = 'Invalid username or password. Please try again.';
+        loginMessage.textContent = 'Invalid username, password, or identity. Please try again.';
         loginMessage.className = 'login-message error';
     }
 });

@@ -23,18 +23,31 @@
             <p> Please enter your username and password to log in. </p>
             <div id="login_message" class="login-message"></div>
             <form id="login_form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required><br><br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
+                <div class="form-row">
+                    <label for="role-select">Identity:</label>
+                    <select id="role-select">
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Faculty / Staff</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-row">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
                 <button type="submit">Login</button>
             </form>
             <div id="account_info" class="account-info">
                 <h3>Pre-set campus account (for internal use)</h3>
                 <ul>
-                    <li>Username: alice, Password: Campus123</li>
-                    <li>Username: bob, Password: Room456</li>
-                    <li>Username: cindy, Password: Book789</li>
+                    <li>Username: alice, Password: Campus123 (Student)</li>
+                    <li>Username: bob, Password: Room456 (Teacher)</li>
+                    <li>Username: cindy, Password: Book789 (Admin)</li>
+                    <li>Username: K, Password: 123456 (Admin)</li>
+                    <li>Username: P, Password: 123456 (Admin)</li>
                 </ul>
                 <p>Please use the accounts above to log in, no registration required.</p>
             </div>

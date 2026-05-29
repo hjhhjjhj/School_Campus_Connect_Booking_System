@@ -16,19 +16,25 @@
       "username": "cindy",
       "password": "Book789",
       "displayName": "Cindy",
-      "role": "Admin"
+      "role": "Student"
     },
     {
       "username": "K",
       "password": "123456",
       "displayName": "The_shy_little_K",
-      "role": "Admin"
+      "role": "Student"
+    },
+    {
+      "username": "KK",
+      "password": "123456",
+      "displayName": "The_shy_little_K",
+      "role": "Teacher"
     },
     {
       "username": "P",
       "password": "123456",
       "displayName": "Angry_little_P",
-      "role": "Admin"
+      "role": "Student"
     }
   ]
 }
