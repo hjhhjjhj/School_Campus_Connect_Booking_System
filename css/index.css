@@ -1,0 +1,19 @@
+#main_mid_page h2 a {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, #4a90e2, #7c3aed);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(74, 144, 226, 0.35);
+}
+
+#main_mid_page h2 a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.45);
+    background: linear-gradient(135deg, #3b78c8, #6d28d9);
+}

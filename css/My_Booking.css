@@ -1,0 +1,20 @@
+.cancel-btn {
+    margin-top: 14px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cancel-btn:hover {
+    background: #dc2626;
+}
+
+.cancel-btn:active {
+    background: #b91c1c;
+}
