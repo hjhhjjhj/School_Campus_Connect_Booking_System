@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
             loginAnchor.textContent = 'Logout';
         }
 
+        const teacherLink = document.querySelector('nav a.teacher-link');
+        if (teacherLink && currentUser.role === 'Teacher') {
+            teacherLink.style.display = 'inline';
+        }
+
         const loginH2Anchor = document.querySelector('#main_mid_page h2 a[href="Login.html"]');
         if (loginH2Anchor) {
             const h2 = loginH2Anchor.closest('h2');
