@@ -436,11 +436,17 @@ body {
 
 /* My Booking Page Styles */
 .my-bookings-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 16px;
     margin-top: 24px;
     width: 100%;
+    justify-content: center;
+}
+
+.my-bookings-grid .booking-card {
+    width: 280px;
+    flex-shrink: 0;
 }
 
 .booking-card {
