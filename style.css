@@ -560,6 +560,20 @@ body {
     color: #0f4a88;
 }
 
+.booking-card .booking-status {
+    font-weight: 600;
+    color: #f59e0b;
+}
+
+.booking-card .booking-status.status-pending {
+    color: #f59e0b;
+    background: #fffbeb;
+    padding: 2px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    font-size: 13px;
+}
+
 .cancel-btn {
     margin-top: 14px;
     padding: 8px 18px;

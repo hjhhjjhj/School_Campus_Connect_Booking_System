@@ -25,6 +25,9 @@ function renderBookingCard(booking, index) {
         ? `${booking.timeRange.startTime} - ${booking.timeRange.endTime} (${booking.timeRange.duration.toFixed(1)}hours)`
         : 'Time not selected';
 
+    const statusText = booking.status || 'Pending review';
+    const statusClass = statusText === 'Pending review' ? 'status-pending' : '';
+
     return `
         <div class="booking-card">
             <h3>${booking.roomName}</h3>
@@ -32,6 +35,7 @@ function renderBookingCard(booking, index) {
             <p><strong>Available Seats:</strong> ${booking.availableSeats}</p>
             <p><strong>User Role:</strong> ${booking.userRole}</p>
             <p class="booking-time">${durationText}</p>
+            <p><strong>Status:</strong> <span class="booking-status ${statusClass}">${statusText}</span></p>
             <p>${formatBookingTime(booking)}</p>
             <button class="cancel-btn" data-index="${index}">Cancel</button>
         </div>

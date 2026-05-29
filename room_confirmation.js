@@ -253,7 +253,8 @@ document.getElementById('confirm_button').addEventListener('click', () => {
             userRole: userInfo.role,
             date: selectedDate,
             timeRange: selectedTime,
-            bookedAt: new Date().toISOString()
+            bookedAt: new Date().toISOString(),
+            status: 'Pending review'
         };
 
         if (isBookingConflict(confirmedBooking)) {
