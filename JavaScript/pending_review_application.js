@@ -17,13 +17,12 @@ function formatBookingTime(booking) {
     return `Booked at: ${bookedAt}`;
 }
 
-function renderBookingCard(booking, index) {
+function renderBookingCard(booking) {
     const durationText = booking.timeRange && booking.timeRange.duration
         ? `${booking.timeRange.startTime} - ${booking.timeRange.endTime} (${booking.timeRange.duration.toFixed(1)}hours)`
         : 'Time not selected';
 
-    const statusText = booking.status || '待审核';
-    const statusClass = statusText === '待审核' ? 'status-pending' : '';
+    const statusText = booking.status || 'Pending review';
 
     return `
         <div class="booking-card">
@@ -33,10 +32,10 @@ function renderBookingCard(booking, index) {
             <p><strong>Booked by:</strong> ${booking.bookedBy} (${booking.userRole})</p>
             <p><strong>Date:</strong> ${booking.date}</p>
             <p class="booking-time">${durationText}</p>
-            <p><strong>Status:</strong> <span class="booking-status ${statusClass}">${statusText}</span></p>
+            <p><strong>Status:</strong> <span class="booking-status">${statusText}</span></p>
             <p>${formatBookingTime(booking)}</p>
-            <button class="approve-btn" data-index="${index}">Approve</button>
-            <button class="reject-btn" data-index="${index}">Reject</button>
+            <button class="approve-btn" data-bookedat="${booking.bookedAt}" data-roomid="${booking.roomId}" data-date="${booking.date}">Approve</button>
+            <button class="reject-btn" data-bookedat="${booking.bookedAt}" data-roomid="${booking.roomId}" data-date="${booking.date}">Reject</button>
         </div>
     `;
 }
@@ -64,16 +63,21 @@ function renderPendingReviews() {
     }
 
     const bookings = getAllBookings();
-    if (bookings.length === 0) {
+    const pendingBookings = bookings.filter(b => {
+        const status = (b.status || '').toLowerCase();
+        return !status || status === 'pending review' || status === '待审核';
+    });
+
+    if (pendingBookings.length === 0) {
         container.innerHTML = `
             <div class="no-bookings">
-                <p>No booking applications found.</p>
+                <p>No pending booking applications found.</p>
             </div>
         `;
         return;
     }
 
-    container.innerHTML = bookings.map((booking, index) => renderBookingCard(booking, index)).join('');
+    container.innerHTML = pendingBookings.map(booking => renderBookingCard(booking)).join('');
 }
 
 function handleActionClick(e) {
@@ -83,9 +87,14 @@ function handleActionClick(e) {
     const user = getCurrentUser();
     if (!user || user.role !== 'Teacher') return;
 
-    const bookings = getAllBookings();
-    const index = parseInt(btn.getAttribute('data-index'), 10);
-    const targetBooking = bookings[index];
+    const bookedAt = btn.getAttribute('data-bookedat');
+    const roomId = btn.getAttribute('data-roomid');
+    const date = btn.getAttribute('data-date');
+
+    const allBookings = getAllBookings();
+    const targetBooking = allBookings.find(b =>
+        b.bookedAt === bookedAt && b.roomId === roomId && b.date === date
+    );
     if (!targetBooking) return;
 
     const isApprove = btn.classList.contains('approve-btn');
@@ -96,9 +105,9 @@ function handleActionClick(e) {
 
     const storedBookings = JSON.parse(localStorage.getItem('campusBookingBookings') || '[]');
     const updatedBookings = storedBookings.map(b => {
-        if (b.bookedAt === targetBooking.bookedAt &&
-            b.roomId === targetBooking.roomId &&
-            b.date === targetBooking.date) {
+        if (b.bookedAt === bookedAt &&
+            b.roomId === roomId &&
+            b.date === date) {
             return { ...b, status: newStatus };
         }
         return b;

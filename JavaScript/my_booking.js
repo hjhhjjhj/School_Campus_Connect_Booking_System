@@ -25,8 +25,18 @@ function renderBookingCard(booking, index) {
         ? `${booking.timeRange.startTime} - ${booking.timeRange.endTime} (${booking.timeRange.duration.toFixed(1)}hours)`
         : 'Time not selected';
 
-    const statusText = booking.status || 'Pending review';
-    const statusClass = statusText === 'Pending review' ? 'status-pending' : '';
+    const status = (booking.status || '').toLowerCase();
+    let displayStatus, statusClass;
+    if (status === 'approved') {
+        displayStatus = '通过';
+        statusClass = 'status-approved';
+    } else if (status === 'rejected') {
+        displayStatus = '未通过';
+        statusClass = 'status-rejected';
+    } else {
+        displayStatus = '待审核';
+        statusClass = 'status-pending';
+    }
 
     return `
         <div class="booking-card">
@@ -35,7 +45,7 @@ function renderBookingCard(booking, index) {
             <p><strong>Available Seats:</strong> ${booking.availableSeats}</p>
             <p><strong>User Role:</strong> ${booking.userRole}</p>
             <p class="booking-time">${durationText}</p>
-            <p><strong>Status:</strong> <span class="booking-status ${statusClass}">${statusText}</span></p>
+            <p><strong>Status:</strong> <span class="booking-status ${statusClass}">${displayStatus}</span></p>
             <p>${formatBookingTime(booking)}</p>
             <button class="cancel-btn" data-index="${index}">Cancel</button>
         </div>
