@@ -28,13 +28,13 @@ function renderBookingCard(booking, index) {
     const status = (booking.status || '').toLowerCase();
     let displayStatus, statusClass;
     if (status === 'approved') {
-        displayStatus = '通过';
+        displayStatus = 'Approved';
         statusClass = 'status-approved';
     } else if (status === 'rejected') {
-        displayStatus = '未通过';
+        displayStatus = 'Rejected';
         statusClass = 'status-rejected';
     } else {
-        displayStatus = '待审核';
+        displayStatus = 'Pending review';
         statusClass = 'status-pending';
     }
 
